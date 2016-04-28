@@ -26,7 +26,7 @@ for ch = 1:ch_num
 end
 
 %%
-%CBSI
+% Apply Correlation Based Signal Improvement (CSBI) method
 for ch=1:ch_num
     [CBSI_hbo_frontal(:,ch),CBSI_hb_frontal(:,ch)]=CBSI(hbo_frontal(:,ch),hb_frontal(:,ch));
     [CBSI_hbo_visual(:,ch),CBSI_hb_visual(:,ch)]=CBSI(hbo_visual(:,ch),hb_visual(:,ch));
