@@ -1,4 +1,5 @@
-f = figure('Units','normalized','Position',[0 0 1 1]);
+% f = figure('Units','normalized','Position',[0 0 1 1]);
+figure;
 
 mark = [];
 for i=1:9
