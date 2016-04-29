@@ -1,35 +1,47 @@
-function [ oxy,deoxy, total ] = conv( data )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+function [oxy, deoxy, total] = conv(data)
+% CONV converts raw data from ONE channel to hemoglobin data
+% 
+% In:
+%   data <nx4>: 4 columns contains: dark, wavelength 780, 805, 830
+%   respectively
+% Out:
+%   oxy <nx1>:  oxygenated hemoglobin data
+%   deoxy <nx1>:deoxygenated hemoglobin
+%   total <nx1>:total hemoglobin
+%
+% Example:
+%   link = '..\..\data\Thao_rubic\Subject1\data\data1.mat';
+%   [info, ad_data] = load_ad(link);        % Select recorded channels
+%   [oxy, deoxy, total] = conv(ad_data.raw(:, 1:4));    % convert first channel
+%
+% Dependecies:
+%   k_coeff.mat
+%
 
-k1=-1.4887;
-k2=0.5970;
-k3=1.4847;
-k4=1.8545;
-k5=-0.2394;
-k6=-1.0947;
+% Check if dimensions of the input data are correct
+[nrow, ncol] = size(data);
+if ncol ~= 4
+    error('The number of columns must be equal than 4');
+elseif nrow < ncol
+    error('The input data must be in form of <nx4> where n is the number of sample points');
+end
+    
+% Load k coefficients
+load('k_coeff');
 
-oxy=[];
-deoxy=[];
-D=data(:,1);
-L1=data(:,2);
-L2=data(:,3);
-L3=data(:,4);
+% Converting
+D = double(data(:,1));  % Dark values
+L1= double(data(:,2));  % wavelength 1
+L2= double(data(:,3));  % 2
+L3= double(data(:,4));  % 3
 
-L1=double(L1);
-L2=double(L2);
-L3=double(L3);
-D=double(D);
 v780=10.0*(L1/32768.0);
 v805=10.0*(L2/32768.0);
 v830=10.0*(L3/32768.0);
 dark=10.0*(D/32768.0);
 
-ohb_temp = -k1 * v780 - k2 * v805 - k3 * v830;
-dehb_temp =- k4 * v780 - k5 * v805 - k6 * v830;
-
-oxy=[oxy,ohb_temp];
-deoxy=[deoxy,dehb_temp];
+oxy = -k1 * v780 - k2 * v805 - k3 * v830;
+deoxy =- k4 * v780 - k5 * v805 - k6 * v830;
 total = oxy + deoxy;
 end
 

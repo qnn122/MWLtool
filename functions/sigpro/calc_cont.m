@@ -1,8 +1,19 @@
-%*******************************************************
-%*         Make Continuous Hb Data Function            *
-%*******************************************************
-
 function [ hb_data ] = calc_cont( info, hb_data, para )
+% CALC_CONT makes continuous Hb data function
+% 
+% In:
+%   info <struct> : defines experiment information
+%   hb_data <struct>: all hemoglobin data whose fiels are hemo values
+%   across different cortex. Each field is a structure ifself that contains
+%   HbO, Hb, and totalHb across all channels, raw and filtered as well. for
+%   example:
+%       hb_data.frontal.raw : raw data whose dimension is <3 x numsample x numchannel>/
+%                             First row = HbO, second = Hb, third = total.
+%       hb_data.frontal.fil : filtered data
+%   para <struct> : defines filters' parameters
+% Out:
+%   hb_data <struct>: continuous Hb data
+
 
 %Bandpass filter
 Fs = 1/info.ts;

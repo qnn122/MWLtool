@@ -21,9 +21,8 @@ function [ info, ad_data] = load_ad( link )
 %       points and m is equal (number of selected channels x 4)
 %       + title1, title2, title3 : wavelength values
 % Exampe:
-%   link = '.\data\Thao_rubic\Subject1\data\data1.mat';
+%   link = '..\..\data\Thao_rubic\Subject1\data\data1.mat';
 %   [info, ad_data] = load_ad(link);
-
 
 %info
 info.ad_ch_max = 14;
